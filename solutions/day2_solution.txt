@@ -1,0 +1,1 @@
+Sum of the power of minimum sets: 63981

@@ -17,6 +17,14 @@ public class CharacterGrid {
         }
     }
 
+    public char get(int x, int y) {
+        if (isValidPosition(x, y)) {
+            return grid[y][x];
+        } else {
+            throw new IllegalArgumentException("Invalid position: (" + x + ", " + y + ")");
+        }
+    }
+
     public char getChar(int row, int col) {
         return grid[row][col];
     }
@@ -37,19 +45,11 @@ public class CharacterGrid {
         return isValidPosition(row, col) && grid[row][col] != '.' && !Character.isDigit(grid[row][col]);
     }
 
-    public boolean isPartNumber(int row, int col) {
-        return isValidPosition(row, col) && Character.isDigit(grid[row][col]);
-    }
-
-    public char get(int x, int y) {
-        if (isValidPosition(x, y)) {
-            return grid[y][x];
-        } else {
-            throw new IllegalArgumentException("Invalid position: (" + x + ", " + y + ")");
-        }
-    }
-
     public boolean isSymbol(char c) {
         return c != '.' && !Character.isDigit(c);
+    }
+
+    public boolean isPartNumber(int row, int col) {
+        return isValidPosition(row, col) && Character.isDigit(grid[row][col]);
     }
 }

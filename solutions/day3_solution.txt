@@ -1,1 +1,1 @@
-Sum of all part numbers: 7710
+Sum of all part numbers: 0

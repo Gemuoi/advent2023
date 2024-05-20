@@ -3,6 +3,7 @@ package advent.utils;
 import java.util.List;
 
 public class CharacterGrid {
+
     private final char[][] grid;
 
     public CharacterGrid(List<String> lines) {
@@ -38,5 +39,17 @@ public class CharacterGrid {
 
     public boolean isPartNumber(int row, int col) {
         return isValidPosition(row, col) && Character.isDigit(grid[row][col]);
+    }
+
+    public char get(int x, int y) {
+        if (isValidPosition(x, y)) {
+            return grid[y][x];
+        } else {
+            throw new IllegalArgumentException("Invalid position: (" + x + ", " + y + ")");
+        }
+    }
+
+    public boolean isSymbol(char c) {
+        return c != '.' && !Character.isDigit(c);
     }
 }

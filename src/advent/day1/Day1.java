@@ -1,6 +1,6 @@
 package advent.day1;
 
-import data.Stream;
+import io.PuzzleDataIO;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -15,7 +15,7 @@ public class Day1 {
 
     public static void main(String[] args) {
         try {
-            InputStream puzzleStream = Stream.readPuzzleData();
+            InputStream puzzleStream = PuzzleDataIO.readPuzzleData();
             BufferedReader reader = new BufferedReader(new InputStreamReader(puzzleStream));
 
             StringBuilder solutionBuilder = new StringBuilder();
@@ -49,9 +49,9 @@ public class Day1 {
             puzzleStream.close();
 
             String solution = solutionBuilder.toString();
-            Stream.writeSolution(solution);
+            PuzzleDataIO.writeSolution(solution);
 
-            Stream.writeSolution("Total sum of combined numbers: " + totalSum);
+            PuzzleDataIO.writeSolution("Total sum of combined numbers: " + totalSum);
         } catch (IOException e) {
             e.printStackTrace();
         }

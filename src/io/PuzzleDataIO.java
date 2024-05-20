@@ -1,9 +1,9 @@
-package data;
+package io;
 
 import java.io.*;
 import java.nio.file.*;
 
-public class Stream {
+public class PuzzleDataIO {
     private static final String PUZZLES_DIRECTORY = "resources";
     private static final String SOLUTIONS_DIRECTORY = "solutions";
     private static final String CLASS_NAME_REGEX = "Day(\\d+)";
@@ -23,7 +23,7 @@ public class Stream {
         StackTraceElement[] stackTraceElements = Thread.currentThread().getStackTrace();
         for (int i = 1; i < stackTraceElements.length; i++) {
             StackTraceElement element = stackTraceElements[i];
-            if (!element.getClassName().equals(Stream.class.getName())) {
+            if (!element.getClassName().equals(PuzzleDataIO.class.getName())) {
                 return element.getClassName();
             }
         }

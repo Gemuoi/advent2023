@@ -1,7 +1,7 @@
 package advent.day3;
 
 import advent.utils.CharacterGrid;
-import data.Stream;
+import io.PuzzleDataIO;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,7 +13,7 @@ import java.util.List;
 public class Day3 {
     public static void main(String[] args) {
         try {
-            InputStream inputStream = Stream.readPuzzleData();
+            InputStream inputStream = PuzzleDataIO.readPuzzleData();
             BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
 
             List<String> lines = new ArrayList<>();
@@ -25,7 +25,7 @@ public class Day3 {
             CharacterGrid characterGrid = new CharacterGrid(lines);
 
             int sum = calculateSum(characterGrid);
-            Stream.writeSolution("Sum of all part numbers: " + sum);
+            PuzzleDataIO.writeSolution("Sum of all part numbers: " + sum);
             inputStream.close();
         } catch (IOException e) {
             e.printStackTrace();

@@ -1,6 +1,6 @@
 package advent.day2;
 
-import data.Stream;
+import io.PuzzleDataIO;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,7 +12,7 @@ import java.util.List;
 public class Day2 {
     public static void main(String[] args) throws IOException {
         List<String> games = new ArrayList<>();
-        try (InputStream inputStream = Stream.readPuzzleData();
+        try (InputStream inputStream = PuzzleDataIO.readPuzzleData();
              BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream))) {
             String line;
             while ((line = reader.readLine()) != null) {
@@ -57,6 +57,6 @@ public class Day2 {
             totalPower += power;
         }
 
-        Stream.writeSolution("Sum of the power of minimum sets: " + totalPower);
+        PuzzleDataIO.writeSolution("Sum of the power of minimum sets: " + totalPower);
     }
 }

@@ -1,59 +1,60 @@
 package advent.day3;
 
+import advent.utils.CharacterGrid;
 import data.Stream;
 
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Day3 {
-    public static void main(String[] args) throws IOException {
-        BufferedReader reader = new BufferedReader(new InputStreamReader(Stream.readPuzzleData()));
-        String line;
-        StringBuilder sb = new StringBuilder();
-        while ((line = reader.readLine()) != null) {
-            sb.append(line).append("\n");
+    public static void main(String[] args) {
+        try {
+            InputStream inputStream = Stream.readPuzzleData();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(inputStream));
+
+            List<String> lines = new ArrayList<>();
+            String line;
+            while ((line = reader.readLine()) != null) {
+                lines.add(line);
+            }
+
+            CharacterGrid characterGrid = new CharacterGrid(lines);
+
+            int sum = calculateSum(characterGrid);
+            Stream.writeSolution("Sum of all part numbers: " + sum);
+            inputStream.close();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
-        reader.close();
-        String[] schematic = sb.toString().split("\n");
-        int sum = sumPartNumbers(schematic);
-        Stream.writeSolution("Sum of all part numbers: " + sum);
     }
 
-    public static int sumPartNumbers(String[] schematic) {
+    private static int calculateSum(CharacterGrid characterGrid) {
         int sum = 0;
-        int rows = schematic.length;
-        int cols = schematic[0].length();
+        int rows = characterGrid.getRowCount();
+        int cols = characterGrid.getColumnCount();
 
         for (int i = 0; i < rows; i++) {
             for (int j = 0; j < cols; j++) {
-                if (Character.isDigit(schematic[i].charAt(j))) {
-                    if (isAdjacentToSymbol(schematic, i, j)) {
-                        sum += Character.getNumericValue(schematic[i].charAt(j));
+                if (characterGrid.isSymbol(i, j)) {
+                    int partSum = 0;
+                    for (int di = -1; di <= 1; di++) {
+                        for (int dj = -1; dj <= 1; dj++) {
+                            if (di == 0 && dj == 0) continue;
+                            int ni = i + di;
+                            int nj = j + dj;
+                            if (characterGrid.isPartNumber(ni, nj)) {
+                                partSum += characterGrid.getChar(ni, nj) - '0';
+                            }
+                        }
                     }
+                    sum += partSum;
                 }
             }
         }
-
         return sum;
-    }
-
-    public static boolean isAdjacentToSymbol(String[] schematic, int row, int col) {
-        int[] dr = {-1, -1, -1, 0, 0, 1, 1, 1};
-        int[] dc = {-1, 0, 1, -1, 1, -1, 0, 1};
-        int rows = schematic.length;
-        int cols = schematic[0].length();
-
-        for (int k = 0; k < 8; k++) {
-            int newRow = row + dr[k];
-            int newCol = col + dc[k];
-            if (newRow >= 0 && newRow < rows && newCol >= 0 && newCol < cols) {
-                if (schematic[newRow].charAt(newCol) != '.') {
-                    return true;
-                }
-            }
-        }
-
-        return false;
     }
 }

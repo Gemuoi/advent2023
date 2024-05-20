@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.function.BiConsumer;
 import java.util.stream.IntStream;
 
 public class Day3 {
@@ -40,21 +39,36 @@ public class Day3 {
         List<Integer> xsList = xs.boxed().toList();
         List<Pair<Vector2, Character>> adjacentSymbols = new ArrayList<>();
 
-        BiConsumer<Integer, Integer> checkTile = (x, yy) -> {
-            char c = charGrid.get(x, yy);
-            if (charGrid.isSymbol(c)) {
-                adjacentSymbols.add(new Pair<>(new Vector2(x, yy), c));
+        for (int yy = y - 1; yy <= y + 1; yy++) {
+            for (int x : xsList) {
+                if (yy == y && x == x) {
+                    continue;
+                }
+                if (charGrid.isValidPosition(x, yy)) {
+                    char c = charGrid.get(x, yy);
+                    if (charGrid.isSymbol(c)) {
+                        adjacentSymbols.add(new Pair<>(new Vector2(x, yy), c));
+                    }
+                }
             }
-        };
+        }
 
-        int minX = xsList.stream().min(Integer::compareTo).orElseThrow();
-        int maxX = xsList.stream().max(Integer::compareTo).orElseThrow();
-
-        xsList.forEach(x -> IntStream.rangeClosed(y - 1, y + 1).forEach(yy -> {
-            if ((x != minX && x != maxX) || (yy != y)) {
-                checkTile.accept(x, yy);
+        for (int dx = -1; dx <= 1; dx++) {
+            for (int dy = -1; dy <= 1; dy++) {
+                if (dx != 0 || dy != 0) {
+                    for (int x : xsList) {
+                        int neighborX = x + dx;
+                        int neighborY = y + dy;
+                        if (charGrid.isValidPosition(neighborX, neighborY)) {
+                            char c = charGrid.get(neighborX, neighborY);
+                            if (charGrid.isSymbol(c)) {
+                                adjacentSymbols.add(new Pair<>(new Vector2(neighborX, neighborY), c));
+                            }
+                        }
+                    }
+                }
             }
-        }));
+        }
 
         return adjacentSymbols;
     }
